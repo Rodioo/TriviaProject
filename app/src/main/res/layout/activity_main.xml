@@ -10,12 +10,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/loginFragment"
-            android:name="com.example.triviaproject.login.LoginFragment"
+        <fragment
+            android:id="@+id/navHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_login" />
+            tools:layout="@layout/fragment_login"
+            app:navGraph="@navigation/navigation"
+            app:defaultNavHost="true" />
 
     </LinearLayout>
 </layout>
