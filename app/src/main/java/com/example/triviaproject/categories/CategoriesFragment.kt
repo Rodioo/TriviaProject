@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.triviaproject.R
 import com.example.triviaproject.databinding.FragmentCategoriesBinding
@@ -15,7 +15,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class CategoriesFragment : Fragment() {
 
+    private lateinit var adapter: CategoriesAdapter
     private lateinit var binding: FragmentCategoriesBinding
+    private lateinit var viewModel: CategoriesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +25,13 @@ class CategoriesFragment : Fragment() {
     ): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_categories, container, false)
+
+        viewModel = ViewModelProvider(this)[CategoriesViewModel::class.java]
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        adapter = CategoriesAdapter()
+        binding.categoriesList.adapter = adapter
 
         binding.signOutButton.setOnClickListener {
             signOut()
