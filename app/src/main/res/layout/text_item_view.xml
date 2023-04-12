@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:textSize="24sp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="category"
+            type="com.example.triviaproject.categories.Category" />
+    </data>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/button_text_size"
+        android:text="@{category.name}"
+        android:contentDescription="@{category.name}"
+        android:gravity="center_horizontal"
+        style="@style/category" />
+</layout>

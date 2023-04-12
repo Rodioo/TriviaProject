@@ -1,32 +1,40 @@
 package com.example.triviaproject.categories
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.triviaproject.R
+import com.example.triviaproject.databinding.TextItemViewBinding
 
-class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
 
-class CategoriesAdapter: RecyclerView.Adapter<TextItemViewHolder>() {
-    var data = listOf<String>("ceva", "ceva1", "c3va2")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
+class CategoriesAdapter: ListAdapter<Category, CategoriesAdapter.ViewHolder>(DiffCallback) {
+
+    class ViewHolder(private var binding: TextItemViewBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(category: Category) {
+            binding.category = category
+            binding.executePendingBindings()
+        }
+    }
+
+    companion object DiffCallback: DiffUtil.ItemCallback<Category>() {
+        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem == newItem
         }
 
-    override fun getItemCount() = data.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.text_item_view, parent, false) as TextView
-
-        return TextItemViewHolder(view)
+        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem.name == newItem.name
+        }
     }
 
-    override fun onBindViewHolder(holder: TextItemViewHolder, position: Int) {
-        val item = data[position]
-        holder.textView.text = item
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(TextItemViewBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val category = getItem(position)
+
+        holder.bind(category)
+    }
 }

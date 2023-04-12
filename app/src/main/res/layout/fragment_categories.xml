@@ -15,6 +15,19 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
 
+        <TextView
+            android:id="@+id/choose_category_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/large_margin"
+            android:textAllCaps="true"
+            android:text="@string/choose_category"
+            app:layout_constraintEnd_toStartOf="@+id/sign_out_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sign_out_button"
             style="@style/button"
@@ -29,28 +42,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categories_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/categories_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_margin"
-            android:layout_marginTop="@dimen/large_margin"
             android:layout_marginEnd="@dimen/small_margin"
-            android:layout_marginBottom="@dimen/small_margin"
+            app:categoriesList="@{viewModel.categories}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_out_button" />
 
-        <!--        <TextView-->
-<!--            android:id="@+id/response"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:text="@{viewModel.response}"/>-->
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

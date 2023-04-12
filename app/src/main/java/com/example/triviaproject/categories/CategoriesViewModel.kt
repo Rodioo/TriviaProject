@@ -4,33 +4,50 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.triviaproject.repository.TriviaApi
+import com.google.firebase.inject.Deferred
+import kotlinx.coroutines.*
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class CategoriesViewModel: ViewModel() {
 
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private val _categories = MutableLiveData<List<Category>>()
+    val categories: LiveData<List<Category>>
+        get() = _categories
+
+    private val _status = MutableLiveData<String>()
+    val status: LiveData<String>
+        get() = _status
 
     private var selectedCategory = null
+
+    private var viewModelJob: Job = Job()
+    private var coroutineScope: CoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
         getCategories()
     }
 
     private fun getCategories() {
-        TriviaApi.retrofitService.getCategories().enqueue(object: Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _response.value = response.body()
-            }
+        coroutineScope.launch {
+            val response = TriviaApi.retrofitService.getCategories()
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    _status.value = "SUCCESS"
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _response.value = "Failure ${t.message}"
+                    val parsedResponse = CategoriesUtils.parseResponse(response.body()!!)
+                    _categories.value = parsedResponse
+                } else {
+                    _status.value = "Failure: ${response.message()}"
+                }
             }
+        }
+    }
 
-        })
-        _response.value = ""
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

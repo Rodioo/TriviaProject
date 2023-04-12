@@ -1,6 +1,7 @@
 package com.example.triviaproject.categories
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +9,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.triviaproject.R
 import com.example.triviaproject.databinding.FragmentCategoriesBinding
+import com.example.triviaproject.utils.RecyclerViewSpacing
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class CategoriesFragment : Fragment() {
 
-    private lateinit var adapter: CategoriesAdapter
     private lateinit var binding: FragmentCategoriesBinding
     private lateinit var viewModel: CategoriesViewModel
 
@@ -24,14 +26,16 @@ class CategoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_categories, container, false)
+        binding = FragmentCategoriesBinding.inflate(inflater)
 
         viewModel = ViewModelProvider(this)[CategoriesViewModel::class.java]
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        adapter = CategoriesAdapter()
-        binding.categoriesList.adapter = adapter
+        val spacing = resources.getDimensionPixelSize(R.dimen.medium_margin)
+        binding.categoriesRecycler.addItemDecoration(RecyclerViewSpacing(spacing))
+
+        binding.categoriesRecycler.adapter = CategoriesAdapter()
 
         binding.signOutButton.setOnClickListener {
             signOut()

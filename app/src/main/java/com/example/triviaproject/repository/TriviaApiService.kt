@@ -1,6 +1,6 @@
 package com.example.triviaproject.repository
 
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ private val retrofit = Retrofit.Builder()
 interface TriviaApiService {
 
     @GET(value = "categories")
-    fun getCategories(): Call<String>
+    suspend fun getCategories(): Response<String>
 }
 
 object TriviaApi {
