@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -20,6 +21,7 @@ class CategoriesFragment : Fragment() {
 
     private lateinit var binding: FragmentCategoriesBinding
     private lateinit var viewModel: CategoriesViewModel
+    private lateinit var adapter: CategoriesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +37,28 @@ class CategoriesFragment : Fragment() {
         val spacing = resources.getDimensionPixelSize(R.dimen.medium_margin)
         binding.categoriesRecycler.addItemDecoration(RecyclerViewSpacing(spacing))
 
-        binding.categoriesRecycler.adapter = CategoriesAdapter()
+        adapter = CategoriesAdapter()
+        binding.categoriesRecycler.adapter = adapter
 
         binding.signOutButton.setOnClickListener {
             signOut()
         }
+
+        viewModel.categories.observe(viewLifecycleOwner) {
+            categories -> adapter.submitList(categories)
+        }
+
+        binding.categoriesSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                viewModel.filterCategories(query)
+                return true
+            }
+
+        })
 
         return binding.root
     }

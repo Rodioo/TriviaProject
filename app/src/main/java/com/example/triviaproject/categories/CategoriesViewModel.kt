@@ -13,6 +13,7 @@ import retrofit2.Response
 
 class CategoriesViewModel: ViewModel() {
 
+    private val allCategories = MutableLiveData<List<Category>>()
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>>
         get() = _categories
@@ -39,10 +40,22 @@ class CategoriesViewModel: ViewModel() {
 
                     val parsedResponse = CategoriesUtils.parseResponse(response.body()!!)
                     _categories.value = parsedResponse
+                    allCategories.value = parsedResponse
                 } else {
                     _status.value = "Failure: ${response.message()}"
                 }
             }
+        }
+    }
+
+    fun filterCategories(query: String?) {
+        if (query.isNullOrEmpty()) {
+            _categories.value = allCategories.value
+        } else {
+            val filteredCategories = categories.value?.filter {
+                category -> category.name.contains(query, ignoreCase = true)
+            }
+            _categories.value = filteredCategories!!
         }
     }
 
