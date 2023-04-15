@@ -1,16 +1,17 @@
 package com.example.triviaproject.categories
 
 import android.os.Bundle
-import android.view.Gravity
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.triviaproject.MainActivity
 import com.example.triviaproject.R
 import com.example.triviaproject.databinding.FragmentCategoriesBinding
 import com.example.triviaproject.utils.RecyclerViewSpacing
@@ -27,7 +28,6 @@ class CategoriesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentCategoriesBinding.inflate(inflater)
 
         viewModel = ViewModelProvider(this)[CategoriesViewModel::class.java]

@@ -7,4 +7,6 @@
     <string name="title">Who Wants To Be A Millionaire?</string>
     <string name="sign_out">Sign Out</string>
     <string name="choose_category">Choose a category</string>
+    <string name="home">Home</string>
+    <string name="about">About</string>
 </resources>
