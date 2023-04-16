@@ -22,7 +22,7 @@ class CategoriesViewModel: ViewModel() {
     val status: LiveData<String>
         get() = _status
 
-    private var selectedCategory = null
+    var selectedCategory = MutableLiveData<Category>()
 
     private var viewModelJob: Job = Job()
     private var coroutineScope: CoroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)

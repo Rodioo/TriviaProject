@@ -22,10 +22,22 @@
         <action
             android:id="@+id/action_categoriesFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_questionFragment"
+            app:destination="@id/questionFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.triviaproject.about.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/questionFragment"
+        android:name="com.example.triviaproject.question.QuestionFragment"
+        android:label="fragment_question"
+        tools:layout="@layout/fragment_question" >
+        <argument
+            android:name="selectedCategory"
+            app:argType="com.example.triviaproject.categories.Category" />
+    </fragment>
 </navigation>

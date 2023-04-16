@@ -1,10 +1,13 @@
 package com.example.triviaproject.categories
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -15,6 +18,8 @@ import com.example.triviaproject.MainActivity
 import com.example.triviaproject.R
 import com.example.triviaproject.databinding.FragmentCategoriesBinding
 import com.example.triviaproject.utils.RecyclerViewSpacing
+import com.example.triviaproject.utils.Spacing
+import com.example.triviaproject.utils.getSpacing
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
@@ -34,10 +39,9 @@ class CategoriesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        val spacing = resources.getDimensionPixelSize(R.dimen.medium_margin)
-        binding.categoriesRecycler.addItemDecoration(RecyclerViewSpacing(spacing))
+        binding.categoriesRecycler.addItemDecoration(RecyclerViewSpacing(requireContext().getSpacing(Spacing.MEDIUM)))
 
-        adapter = CategoriesAdapter()
+        adapter = CategoriesAdapter(viewModel)
         binding.categoriesRecycler.adapter = adapter
 
         binding.signOutButton.setOnClickListener {
@@ -46,6 +50,10 @@ class CategoriesFragment : Fragment() {
 
         viewModel.categories.observe(viewLifecycleOwner) {
             categories -> adapter.submitList(categories)
+        }
+
+        viewModel.selectedCategory.observe(viewLifecycleOwner) {
+            view?.findNavController()?.navigate(CategoriesFragmentDirections.actionCategoriesFragmentToQuestionFragment(it))
         }
 
         binding.categoriesSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
@@ -73,6 +81,6 @@ class CategoriesFragment : Fragment() {
 
         googleSignInClient.signOut()
 
-        view?.findNavController()?.navigate(R.id.action_categoriesFragment_to_loginFragment)
+        view?.findNavController()?.navigate(CategoriesFragmentDirections.actionCategoriesFragmentToLoginFragment())
     }
 }

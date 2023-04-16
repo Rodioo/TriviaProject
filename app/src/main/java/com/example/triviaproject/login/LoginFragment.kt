@@ -75,7 +75,7 @@ class LoginFragment : Fragment() {
                 auth.signInWithCredential(credential).addOnCompleteListener{
                     if (it.isSuccessful) {
                         Log.i("loginFragment", account.displayName.toString())
-                        view?.findNavController()?.navigate(R.id.action_loginFragment_to_categoriesFragment)
+                        view?.findNavController()?.navigate(LoginFragmentDirections.actionLoginFragmentToCategoriesFragment())
                     } else {
                         Toast.makeText(this.context, "Login Failed: ${it.exception.toString()}", Toast.LENGTH_LONG).show()
                     }
