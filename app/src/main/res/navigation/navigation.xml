@@ -39,5 +39,26 @@
         <argument
             android:name="selectedCategory"
             app:argType="com.example.triviaproject.categories.Category" />
+        <action
+            android:id="@+id/action_questionFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_questionFragment_to_gameFinishedFragment"
+            app:destination="@id/gameFinishedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameFinishedFragment"
+        android:name="com.example.triviaproject.gameFinished.GameFinishedFragment"
+        android:label="fragment_game_finished"
+        tools:layout="@layout/fragment_game_finished" >
+        <action
+            android:id="@+id/action_gameFinishedFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+        <argument
+            android:name="selectedCategory"
+            app:argType="com.example.triviaproject.categories.Category" />
+        <argument
+            android:name="numOfCorrectAnswers"
+            app:argType="integer" />
     </fragment>
 </navigation>

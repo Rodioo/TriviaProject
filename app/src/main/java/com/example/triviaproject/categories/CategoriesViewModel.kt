@@ -33,7 +33,7 @@ class CategoriesViewModel: ViewModel() {
 
     private fun getCategories() {
         coroutineScope.launch {
-            val response = TriviaApi.retrofitService.getCategories()
+            val response = TriviaApi.retrofitScalarsService.getCategories()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     _status.value = "SUCCESS"

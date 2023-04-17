@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.example.triviaproject.question.QuestionViewModel" />
+        <variable
+            name="hasSubmittedAnswer"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,14 +19,134 @@
         tools:context=".question.QuestionFragment">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/category_title"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:text="@{viewModel.category.name}"
+            android:textAlignment="center"
+            android:textSize="@dimen/big_text"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/question_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:text="@{viewModel.currentQuestionText}"
+            android:textAlignment="center"
+            android:textSize="@dimen/small_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_title" />
+
+        <TextView
+            android:id="@+id/question_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/extra_large_margin"
+            android:text="@{viewModel.currentQuestion.question.text}"
+            android:textAlignment="center"
+            android:textSize="@dimen/small_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_number" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/extra_large_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:divider="@drawable/linear_layout_divider"
+            android:orientation="vertical"
+            android:showDividers="middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/question_title">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/answer_1"
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{viewModel.currentQuestion.answers[0]}"
+                android:text="@{viewModel.currentQuestion.answers[0]}"
+                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[0] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{!hasSubmittedAnswer}"
+                android:textSize="@dimen/small_text"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/answer_2"
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{viewModel.currentQuestion.answers[1]}"
+                android:text="@{viewModel.currentQuestion.answers[1]}"
+                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[1] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{!hasSubmittedAnswer}"
+                android:textSize="@dimen/small_text"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/answer_3"
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{viewModel.currentQuestion.answers[2]}"
+                android:text="@{viewModel.currentQuestion.answers[2]}"
+                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[2] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{!hasSubmittedAnswer}"
+                android:textSize="@dimen/small_text"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/answer_4"
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@{viewModel.currentQuestion.answers[3]}"
+                android:text="@{viewModel.currentQuestion.answers[3]}"
+                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[3] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{!hasSubmittedAnswer}"
+                android:textSize="@dimen/small_text"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/feedback_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/correct_answer"
+            android:textSize="@dimen/small_text"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/feedback_button"
+            style="@style/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:onClick="@{() -> viewModel.onCorrect()}"
+            android:text="@string/next_question"
+            android:textSize="@dimen/small_text"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/feedback_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

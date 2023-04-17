@@ -9,4 +9,6 @@
     <dimen name="button_text_size">18sp</dimen>
     <dimen name="medium_text">24sp</dimen>
     <dimen name="categories_recycler_height">500dp</dimen>
+    <dimen name="small_text">20sp</dimen>
+    <dimen name="big_text">36sp</dimen>
 </resources>
