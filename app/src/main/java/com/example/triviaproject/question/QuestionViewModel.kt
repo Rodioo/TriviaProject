@@ -10,7 +10,6 @@ import com.example.triviaproject.utils.Difficulties
 import kotlinx.coroutines.*
 
 //TODO: Add progress bar when loading by making an observer on status
-//TODO: after submitting an answer reset the UI when clicking next question button
 class QuestionViewModel(val category: Category): ViewModel() {
 
     private val _currentQuestionNumber = MutableLiveData<Int>()

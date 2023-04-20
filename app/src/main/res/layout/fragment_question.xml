@@ -5,11 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.example.triviaproject.question.QuestionViewModel" />
         <variable
-            name="hasSubmittedAnswer"
+            name="hasAnsweredCorrectly"
             type="Boolean" />
     </data>
 
@@ -78,8 +79,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@{viewModel.currentQuestion.answers[0]}"
                 android:text="@{viewModel.currentQuestion.answers[0]}"
-                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[0] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
-                android:enabled="@{!hasSubmittedAnswer}"
+                android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[0] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{hasAnsweredCorrectly == null}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -90,8 +91,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@{viewModel.currentQuestion.answers[1]}"
                 android:text="@{viewModel.currentQuestion.answers[1]}"
-                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[1] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
-                android:enabled="@{!hasSubmittedAnswer}"
+                android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[1] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{hasAnsweredCorrectly == null}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -102,8 +103,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@{viewModel.currentQuestion.answers[2]}"
                 android:text="@{viewModel.currentQuestion.answers[2]}"
-                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[2] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
-                android:enabled="@{!hasSubmittedAnswer}"
+                android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[2] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{hasAnsweredCorrectly == null}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -114,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@{viewModel.currentQuestion.answers[3]}"
                 android:text="@{viewModel.currentQuestion.answers[3]}"
-                android:backgroundTint="@{hasSubmittedAnswer ? (viewModel.currentQuestion.answers[3] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
-                android:enabled="@{!hasSubmittedAnswer}"
+                android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[3] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:enabled="@{hasAnsweredCorrectly == null}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -126,9 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/correct_answer"
+            android:text="@{hasAnsweredCorrectly ? @string/correct_answer : @string/incorrect_answer}"
             android:textSize="@dimen/small_text"
-            android:visibility="invisible"
+            android:visibility="@{hasAnsweredCorrectly != null ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,10 +142,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_margin"
             android:layout_marginEnd="@dimen/small_margin"
-            android:onClick="@{() -> viewModel.onCorrect()}"
-            android:text="@string/next_question"
+            android:text="@{hasAnsweredCorrectly ? @string/next_question : @string/try_again}"
             android:textSize="@dimen/small_text"
-            android:visibility="invisible"
+            android:visibility="@{hasAnsweredCorrectly != null ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedback_text" />
 
