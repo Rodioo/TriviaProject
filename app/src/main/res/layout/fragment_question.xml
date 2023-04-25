@@ -23,7 +23,7 @@
             android:id="@+id/category_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="@dimen/extra_large_margin"
             android:text="@{viewModel.category.name}"
             android:textAlignment="center"
             android:textSize="@dimen/big_text"
@@ -47,14 +47,15 @@
 
         <TextView
             android:id="@+id/question_title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/extra_large_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:paddingLeft="@dimen/small_margin"
+            android:paddingRight="@dimen/small_margin"
             android:text="@{viewModel.currentQuestion.question.text}"
-            android:textAlignment="center"
             android:textSize="@dimen/small_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/question_number" />
 
@@ -63,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/extra_large_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:divider="@drawable/linear_layout_divider"
             android:orientation="vertical"
@@ -77,10 +78,10 @@
                 style="@style/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@{viewModel.currentQuestion.answers[0]}"
-                android:text="@{viewModel.currentQuestion.answers[0]}"
                 android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[0] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:contentDescription="@{viewModel.currentQuestion.answers[0]}"
                 android:enabled="@{hasAnsweredCorrectly == null}"
+                android:text="@{viewModel.currentQuestion.answers[0]}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -89,10 +90,10 @@
                 style="@style/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@{viewModel.currentQuestion.answers[1]}"
-                android:text="@{viewModel.currentQuestion.answers[1]}"
                 android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[1] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:contentDescription="@{viewModel.currentQuestion.answers[1]}"
                 android:enabled="@{hasAnsweredCorrectly == null}"
+                android:text="@{viewModel.currentQuestion.answers[1]}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -101,10 +102,10 @@
                 style="@style/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@{viewModel.currentQuestion.answers[2]}"
-                android:text="@{viewModel.currentQuestion.answers[2]}"
                 android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[2] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:contentDescription="@{viewModel.currentQuestion.answers[2]}"
                 android:enabled="@{hasAnsweredCorrectly == null}"
+                android:text="@{viewModel.currentQuestion.answers[2]}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -113,10 +114,10 @@
                 style="@style/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@{viewModel.currentQuestion.answers[3]}"
-                android:text="@{viewModel.currentQuestion.answers[3]}"
                 android:backgroundTint="@{hasAnsweredCorrectly != null ? (viewModel.currentQuestion.answers[3] == viewModel.currentQuestion.correctAnswer ? @color/md_theme_light_primary : @color/md_theme_light_error) : @color/md_theme_light_tertiary}"
+                android:contentDescription="@{viewModel.currentQuestion.answers[3]}"
                 android:enabled="@{hasAnsweredCorrectly == null}"
+                android:text="@{viewModel.currentQuestion.answers[3]}"
                 android:textSize="@dimen/small_text"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -142,9 +143,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_margin"
             android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
             android:text="@{hasAnsweredCorrectly ? @string/next_question : @string/try_again}"
             android:textSize="@dimen/small_text"
             android:visibility="@{hasAnsweredCorrectly != null ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedback_text" />
 

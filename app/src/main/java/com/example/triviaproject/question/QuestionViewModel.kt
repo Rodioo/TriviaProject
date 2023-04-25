@@ -1,6 +1,5 @@
 package com.example.triviaproject.question
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,12 @@ import kotlinx.coroutines.*
 //TODO: Add progress bar when loading by making an observer on status
 class QuestionViewModel(val category: Category): ViewModel() {
 
+    val NUMBER_OF_QUESTIONS = 9
+    private val NUMBER_OF_QUESTIONS_PER_DIFFICULTY = NUMBER_OF_QUESTIONS / 3
+
     private val _currentQuestionNumber = MutableLiveData<Int>()
+    val currentQuestionNumber: LiveData<Int>
+        get() = _currentQuestionNumber
 
     private val _currentQuestionText = MutableLiveData<String>()
     val currentQuestionText: LiveData<String>
@@ -37,16 +41,18 @@ class QuestionViewModel(val category: Category): ViewModel() {
         getQuestions(Difficulties.HARD.value)
 
         _currentQuestionNumber.value = 0
-        _currentQuestionText.value = "1/9"
+        _currentQuestionText.value = "1/$NUMBER_OF_QUESTIONS"
     }
 
     fun onCorrect() {
         _currentQuestionNumber.value = _currentQuestionNumber.value?.plus(1)
-        _currentQuestionText.value = "${_currentQuestionNumber.value?.plus(1)}/9"
-        _currentQuestion.value = _questions.value?.get(_currentQuestionNumber.value!!)
+        _currentQuestionText.value = "${_currentQuestionNumber.value?.plus(1)}/$NUMBER_OF_QUESTIONS"
+        if (_currentQuestionNumber.value!! < NUMBER_OF_QUESTIONS) {
+            _currentQuestion.value = _questions.value?.get(_currentQuestionNumber.value!!)
+        }
     }
 
-    private fun getQuestions(difficulty: String, limit: Int = 3, type: String = "text_choice") {
+    private fun getQuestions(difficulty: String, limit: Int = NUMBER_OF_QUESTIONS_PER_DIFFICULTY, type: String = "text_choice") {
         coroutineScope.launch {
             val response = TriviaApi.retrofitMoshiService.getQuestions(
                 joinedCategories = category.subcategories.joinToString(separator = ","),

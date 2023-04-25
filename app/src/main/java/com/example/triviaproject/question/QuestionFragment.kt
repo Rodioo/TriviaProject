@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.triviaproject.R
+import com.example.triviaproject.categories.CategoriesFragmentDirections
 import com.example.triviaproject.databinding.FragmentQuestionBinding
 
 class QuestionFragment : Fragment() {
@@ -23,7 +25,9 @@ class QuestionFragment : Fragment() {
     ): View {
         binding = FragmentQuestionBinding.inflate(inflater)
 
-        viewModelFactory = QuestionViewModelFactory(QuestionFragmentArgs.fromBundle(requireArguments()).selectedCategory)
+        viewModelFactory = QuestionViewModelFactory(
+            QuestionFragmentArgs.fromBundle(requireArguments()).selectedCategory
+        )
         viewModel = ViewModelProvider(this, viewModelFactory)[QuestionViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -45,10 +49,19 @@ class QuestionFragment : Fragment() {
     private fun onNextQuestion() {
         viewModel.onCorrect()
         binding.hasAnsweredCorrectly = null
+
+        viewModel.currentQuestionNumber.observe(viewLifecycleOwner) { currentQuestionNumber ->
+            if (currentQuestionNumber == viewModel.NUMBER_OF_QUESTIONS) {
+                view?.findNavController()?.navigate(QuestionFragmentDirections.actionQuestionFragmentToGameFinishedFragment(viewModel.category, currentQuestionNumber))
+            }
+        }
     }
 
     private fun onTryAgain() {
         binding.hasAnsweredCorrectly = null
+        viewModel.currentQuestionNumber.observe(viewLifecycleOwner) { currentQuestionNumber ->
+            view?.findNavController()?.navigate(QuestionFragmentDirections.actionQuestionFragmentToGameFinishedFragment(viewModel.category, currentQuestionNumber))
+        }
     }
 
     private fun initUI() {

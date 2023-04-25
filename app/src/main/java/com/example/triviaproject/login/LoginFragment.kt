@@ -77,6 +77,7 @@ class LoginFragment : Fragment() {
                         Log.i("loginFragment", account.displayName.toString())
                         view?.findNavController()?.navigate(LoginFragmentDirections.actionLoginFragmentToCategoriesFragment())
                     } else {
+                        Log.e("loginFragment", "Login Failed: ${it.exception.toString()}")
                         Toast.makeText(this.context, "Login Failed: ${it.exception.toString()}", Toast.LENGTH_LONG).show()
                     }
                 }
