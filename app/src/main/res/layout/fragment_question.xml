@@ -5,16 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.triviaproject.utils.Status" />
+
         <variable
             name="viewModel"
             type="com.example.triviaproject.question.QuestionViewModel" />
+
         <variable
             name="hasAnsweredCorrectly"
             type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/success_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".question.QuestionFragment">
@@ -28,6 +34,7 @@
             android:textAlignment="center"
             android:textSize="@dimen/big_text"
             android:textStyle="bold"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +48,7 @@
             android:text="@{viewModel.currentQuestionText}"
             android:textAlignment="center"
             android:textSize="@dimen/small_text"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_title" />
@@ -55,6 +63,7 @@
             android:paddingRight="@dimen/small_margin"
             android:text="@{viewModel.currentQuestion.question.text}"
             android:textSize="@dimen/small_text"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/question_number" />
@@ -71,7 +80,8 @@
             android:showDividers="middle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/question_title">
+            app:layout_constraintTop_toBottomOf="@+id/question_title"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}" >
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/answer_1"
@@ -130,7 +140,7 @@
             android:layout_marginTop="32dp"
             android:text="@{hasAnsweredCorrectly ? @string/correct_answer : @string/incorrect_answer}"
             android:textSize="@dimen/small_text"
-            android:visibility="@{hasAnsweredCorrectly != null ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS &amp;&amp;  hasAnsweredCorrectly != null) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,10 +156,58 @@
             android:layout_marginBottom="@dimen/small_margin"
             android:text="@{hasAnsweredCorrectly ? @string/next_question : @string/try_again}"
             android:textSize="@dimen/small_text"
-            android:visibility="@{hasAnsweredCorrectly != null ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS &amp;&amp;  hasAnsweredCorrectly != null) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedback_text" />
 
+        <ProgressBar
+            android:id="@+id/questions_loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_theme_light_tertiary"
+            android:progressBackgroundTint="@color/md_theme_light_tertiary"
+            android:progressTint="@color/md_theme_light_tertiary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{(viewModel.status == Status.ONGOING) ? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{(viewModel.status == Status.DONE_FAILURE) ? View.VISIBLE : View.GONE}" >
+
+            <TextView
+                android:id="@+id/fail_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="@string/failed_questions"
+                android:textSize="@dimen/medium_text" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/retry_button"
+                style="@style/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:gravity="center"
+                android:text="@string/retry"
+                android:textSize="@dimen/small_text"
+                android:onClick="@{() -> viewModel.retryRequest()}" />
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

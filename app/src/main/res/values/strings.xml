@@ -14,4 +14,7 @@
     <string name="correct_answer">That\'s correct!</string>
     <string name="incorrect_answer">That\'s not quite right…</string>
     <string name="share">Share</string>
+    <string name="failed_questions">Failed to retrieve questions</string>
+    <string name="retry">Retry</string>
+    <string name="failed_categories">Failed to retrieve categories</string>
 </resources>

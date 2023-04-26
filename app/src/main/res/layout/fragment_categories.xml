@@ -5,6 +5,8 @@
     tools:context=".categories.CategoriesFragment">
 
     <data>
+        <import type="android.view.View" />
+        <import type="com.example.triviaproject.utils.Status" />
         <variable
             name="viewModel"
             type="com.example.triviaproject.categories.CategoriesViewModel" />
@@ -26,7 +28,8 @@
             android:textSize="@dimen/medium_text"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sign_out_button"
@@ -41,7 +44,8 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/choose_category_text"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}" />
 
         <SearchView
             android:id="@+id/categories_search"
@@ -52,7 +56,8 @@
             android:layout_marginEnd="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_out_button" />
+            app:layout_constraintTop_toBottomOf="@+id/sign_out_button"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categories_recycler"
@@ -67,7 +72,54 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categories_search" />
+            app:layout_constraintTop_toBottomOf="@+id/categories_search"
+            android:visibility="@{(viewModel.status == Status.DONE_SUCCESS) ? View.VISIBLE : View.GONE}" />
+
+        <ProgressBar
+            android:id="@+id/categories_loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_theme_light_tertiary"
+            android:progressBackgroundTint="@color/md_theme_light_tertiary"
+            android:progressTint="@color/md_theme_light_tertiary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{(viewModel.status == Status.ONGOING) ? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{(viewModel.status == Status.DONE_FAILURE) ? View.VISIBLE : View.GONE}" >
+
+            <TextView
+                android:id="@+id/fail_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="@string/failed_categories"
+                android:textSize="@dimen/medium_text" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/retry_button"
+                style="@style/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:gravity="center"
+                android:text="@string/retry"
+                android:textSize="@dimen/small_text"
+                android:onClick="@{() -> viewModel.getCategories()}" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

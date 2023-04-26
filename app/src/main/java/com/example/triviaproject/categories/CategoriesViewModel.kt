@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.triviaproject.repository.TriviaApi
+import com.example.triviaproject.utils.Status
 import com.google.firebase.inject.Deferred
 import kotlinx.coroutines.*
 import org.json.JSONArray
@@ -18,8 +19,8 @@ class CategoriesViewModel: ViewModel() {
     val categories: LiveData<List<Category>>
         get() = _categories
 
-    private val _status = MutableLiveData<String>()
-    val status: LiveData<String>
+    private val _status = MutableLiveData<Status>()
+    val status: LiveData<Status>
         get() = _status
 
     var selectedCategory = MutableLiveData<Category>()
@@ -32,17 +33,18 @@ class CategoriesViewModel: ViewModel() {
     }
 
     private fun getCategories() {
+        _status.value = Status.ONGOING
         coroutineScope.launch {
             val response = TriviaApi.retrofitScalarsService.getCategories()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    _status.value = "SUCCESS"
+                    _status.value = Status.DONE_SUCCESS
 
                     val parsedResponse = CategoriesUtils.parseResponse(response.body()!!)
                     _categories.value = parsedResponse
                     allCategories.value = parsedResponse
                 } else {
-                    _status.value = "Failure: ${response.message()}"
+                    _status.value = Status.DONE_FAILURE
                 }
             }
         }
