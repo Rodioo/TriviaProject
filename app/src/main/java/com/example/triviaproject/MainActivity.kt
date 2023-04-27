@@ -2,12 +2,15 @@ package com.example.triviaproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.triviaproject.categories.CategoriesFragment
 import com.example.triviaproject.databinding.ActivityMainBinding
+import com.example.triviaproject.gameFinished.GameFinishedFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

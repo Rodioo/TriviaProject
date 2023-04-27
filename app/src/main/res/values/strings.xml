@@ -17,4 +17,5 @@
     <string name="failed_questions">Failed to retrieve questions</string>
     <string name="retry">Retry</string>
     <string name="failed_categories">Failed to retrieve categories</string>
+    <string name="play_again">Play Again</string>
 </resources>

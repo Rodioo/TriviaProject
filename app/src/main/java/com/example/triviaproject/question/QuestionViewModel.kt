@@ -9,7 +9,6 @@ import com.example.triviaproject.utils.Difficulties
 import com.example.triviaproject.utils.Status
 import kotlinx.coroutines.*
 
-//TODO: Add progress bar when loading by making an observer on status
 class QuestionViewModel(val category: Category): ViewModel() {
 
     val NUMBER_OF_QUESTIONS = 9
@@ -46,6 +45,9 @@ class QuestionViewModel(val category: Category): ViewModel() {
         getQuestions(Difficulties.EASY.value)
         getQuestions(Difficulties.MEDIUM.value)
         getQuestions(Difficulties.HARD.value)
+
+        _currentQuestionNumber.value = 0
+        _currentQuestionText.value = "1/$NUMBER_OF_QUESTIONS"
     }
 
     fun onCorrect() {

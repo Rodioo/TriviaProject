@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.triviaproject.R
 import com.example.triviaproject.databinding.FragmentGameFinishedBinding
 import com.example.triviaproject.databinding.FragmentQuestionBinding
@@ -15,7 +16,6 @@ import com.example.triviaproject.question.QuestionFragmentArgs
 import com.example.triviaproject.question.QuestionViewModel
 import com.example.triviaproject.question.QuestionViewModelFactory
 
-//disable going back with back arrow
 class GameFinishedFragment : Fragment() {
 
     private lateinit var binding: FragmentGameFinishedBinding
@@ -42,8 +42,12 @@ class GameFinishedFragment : Fragment() {
             binding.shareButton.visibility = View.INVISIBLE
         }
 
-        binding.shareButton.setOnClickListener{
+        binding.shareButton.setOnClickListener {
             shareSuccess()
+        }
+
+        binding.playAgainButton.setOnClickListener {
+            goToCategoriesFragment()
         }
 
         return binding.root
@@ -60,4 +64,7 @@ class GameFinishedFragment : Fragment() {
         startActivity(getShareIntent())
     }
 
+    private fun goToCategoriesFragment() {
+        view?.findNavController()?.navigate(GameFinishedFragmentDirections.actionGameFinishedFragmentToCategoriesFragment())
+    }
 }

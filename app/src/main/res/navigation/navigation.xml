@@ -24,7 +24,9 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_categoriesFragment_to_questionFragment"
-            app:destination="@id/questionFragment" />
+            app:destination="@id/questionFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -44,7 +46,9 @@
             app:destination="@id/categoriesFragment" />
         <action
             android:id="@+id/action_questionFragment_to_gameFinishedFragment"
-            app:destination="@id/gameFinishedFragment" />
+            app:destination="@id/gameFinishedFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/gameFinishedFragment"
