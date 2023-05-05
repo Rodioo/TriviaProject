@@ -18,4 +18,7 @@
     <string name="retry">Retry</string>
     <string name="failed_categories">Failed to retrieve categories</string>
     <string name="play_again">Play Again</string>
+    <string name="about_project">This project was made for the Android Development Course using Kotlin</string>
+    <string name="how_to_play">How To Play:</string>
+    <string name="about_rules">The user will have to log into the app using his Google account.\n\nAfter he successfully logs in he can choose a category from a list.\n\nUpon choosing his desired category, the game will start and he will have to answer 9 questions (3 easy, 3 medium and 3 hard ones).\n\nIf he answers wrong or if he correctly answers all 9 questions the game will end and he can share his result through various platforms.</string>
 </resources>
